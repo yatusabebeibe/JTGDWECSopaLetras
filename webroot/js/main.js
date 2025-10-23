@@ -1,18 +1,19 @@
-const sopaLetras = document.getElementById("sopaLetras");
-const menuDatos = document.getElementById("menuDatos");
+// # --- # Arrays para testing # --- #
 
-const boton = document.getElementById("boton");
-
-const palabrasTest = new Array(
+const palabrasTest = [
     "roca",
     "elefante",
     "bosque"
-);
-
+];
+const brrrrr = [
+    "brrrrr",
+    "veybe",
+    "xddd"
+];
 const palabras = [
   "casa",
   "perro",
-  "árbol",
+  "arbol",
   "libro",
   "sol",
   "luna",
@@ -21,17 +22,42 @@ const palabras = [
   "escuela",
   "ciudad"
 ];
+const palabras2 = [
+  "manzana",
+  "perro",
+  "gato",
+  "casa",
+  "escuela",
+  "arbol",
+  "sol",
+  "luna",
+  "montana",
+  "playa",
+  "nino",
+  "nina",
+  "libro",
+  "amigo",
+  "mesa",
+  "silla",
+  "zapato",
+  "corazon",
+  "coche",
+  "reloj",
+  "puerta",
+  "ventana",
+  "pajaro",
+  "flor"
+];
 
 
 // # --- # Crear tablero # --- #
 
-const arrayPalabras = palabras;
+const arrayPalabras = palabras2;
 
 let dimension = calcularDimension(arrayPalabras);
 let tablero = crearArrayTablero(dimension);
 
 console.info("dimension: ",dimension);
-
 
 for (const palabra of arrayPalabras) {
     let nIntentos = 0,
@@ -49,12 +75,14 @@ for (const palabra of arrayPalabras) {
 
     if (esValida) {
         escribirPalabra(tablero,palabra,posicion,direccion);
-    }    
+    } else {
+        console.error(palabra, "no ha encontrado sitio valido");
+    }
 }
 
-// rellenarEspaciosTablero(tablero)
 pintarTablero(tablero);
-
+rellenarEspaciosTablero(tablero);
+pintarTablero(tablero);
 
 console.log(tablero);
 
@@ -110,14 +138,14 @@ function calcularPosicionAleatoria(dimension) {
  */
 function calcularDireccionAleatoria() {
     const movimientos = [
-        // [-1, 0],  // 0 ↑
-        // [-1, 1],  // 1 ↗
+        [-1, 0],  // 0 ↑
+        [-1, 1],  // 1 ↗
         [0, 1],   // 2 →
         [1, 1],   // 3 ↘
         [1, 0],   // 4 ↓
-        // [1, -1],  // 5 ↙
-        // [0, -1],  // 6 ←
-        // [-1, -1]  // 7 ↖
+        [1, -1],  // 5 ↙
+        [0, -1],  // 6 ←
+        [-1, -1]  // 7 ↖
     ];
     const direccion = parseInt(Math.random()*movimientos.length);
     return {
@@ -151,11 +179,14 @@ function comprobarPosicionValida(tablero, palabra, posicion, direccion) {
     for (let i = 0; i < palabra.length; i++) {
         // Calculamos la posicion de las letras en el tablero
         let fila = posFila + i * direcFila;
-        let letra = posCol + i * direcCol;
-        const celda = tablero[fila][letra];
-        
+        let col = posCol + i * direcCol;
+        const celda = tablero[fila][col];
+
+        // Comprobacion si las palabras se cruzan
+        console.log(celda === palabra[i]? `${palabra} y otro utilizan misma letra en la posicon ${fila} ${col}`:"-");
+
         // si no esta en un espacio vacio o la letra no coincide, mal
-        if (tablero[fila][letra] != null && tablero[fila][letra] !== palabra[i]) {
+        if (celda != null && celda !== palabra[i]) {
             return false;
         }
     }
@@ -174,9 +205,9 @@ function escribirPalabra(tablero, palabra, posicion, direccion) {
 
     for (let i = 0; i < palabra.length; i++){
         let fila = posFila + i * direcFila;
-        let letra = posCol + i * direcCol;
+        let celda = posCol + i * direcCol;
         
-        tablero[fila][letra] = palabra[i];
+        tablero[fila][celda] = palabra[i];
     }
 }
 
@@ -197,8 +228,8 @@ function rellenarEspaciosTablero(tablero) {
         for (let j = 0; j < tablero[i].length; j++)
         {
             if (tablero[i][j] === null || tablero[i][j] === undefined) {
-                let aleatorio = Math.random();
-                if (aleatorio < 0.7) {
+                let nAleatorio = Math.random();
+                if (nAleatorio < 0.7) {
                     tablero[i][j] = consonantes[parseInt(Math.random() * consonantes.length)].toLowerCase();
                 } else {
                     tablero[i][j] = vocales[parseInt(Math.random() * vocales.length)].toLowerCase();
@@ -208,7 +239,9 @@ function rellenarEspaciosTablero(tablero) {
     }
 }
 function pintarTablero(tablero) {
-    let tabla = document.createElement("table");
+    const sopaLetras = document.getElementById("sopaLetras");
+
+    const tabla = document.createElement("table");
 
     for (let i = 0; i < tablero.length; i++)
     {
