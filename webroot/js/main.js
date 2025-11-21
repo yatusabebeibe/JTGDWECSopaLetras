@@ -86,8 +86,6 @@ pintarTablero(tablero);
 
 console.log(tablero);
 
-
-
 // # --- # FUNCIONES # --- #
 
 /**
@@ -261,4 +259,14 @@ function pintarTablero(tablero) {
         tabla.appendChild(fila);
     }
     sopaLetras.appendChild(tabla);
+}
+
+/**
+ * Funcion para obtener la hora local formateada
+ * @returns string
+ */
+function obtenerHoraActual() {
+    const instante = new Date();
+
+    return instante.toLocaleTimeString();
 }
