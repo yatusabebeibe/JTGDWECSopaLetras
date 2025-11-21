@@ -238,6 +238,11 @@ function rellenarEspaciosTablero(tablero) {
         }
     }
 }
+
+/**
+ * Pinta el tablero en el DOM
+ * @param {string[]} tablero 
+ */
 function pintarTablero(tablero) {
     const sopaLetras = document.getElementById("sopaLetras");
 
