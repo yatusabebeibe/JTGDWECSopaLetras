@@ -6,6 +6,15 @@
     <title>Sopa de letras</title>
     <script src="./webroot/js/main.js" defer></script>
     <link rel="stylesheet" href="./webroot/css/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded",() =>{
+            let textoHora = document.getElementById("hora");
+            textoHora.innerHTML = obtenerHoraActual();
+            setInterval(() => {
+                textoHora.innerHTML = obtenerHoraActual();
+            }, 1000);
+        })
+    </script>
 </head>
 <body>
     <header>
