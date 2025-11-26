@@ -302,6 +302,48 @@ function comprobarSeleccionValida( {primera, ultima} ) {
 
     return valido;
 }
+
+/**
+ * Obtiene la palabra en el orden de la seleccion
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones 
+ * @returns {string} `string` La palabra seleccionada
+ */
+function obtenerPalabra( { primera, ultima } ) {
+    let palabra = "";
+
+    /** @type {HTMLTableElement} */
+    let tabla = document.getElementById("buena");
+
+    let difX = Math.abs(primera.X - ultima.X);
+    let difY = Math.abs(primera.Y - ultima.Y);
+
+    const dirX = primera.X < ultima.X ? 1 : -1 ; // Direccion horizontal -
+    const dirY = primera.Y < ultima.Y ? 1 : -1 ; // Direccion vertical |
+
+    if (difX > difY)
+    { // Horizontal -
+        for (let pos = primera.X; pos != ( ultima.X + dirX ); pos += dirX) {
+            palabra += tabla.children[primera.Y].children[pos].textContent;
+        }
+    } 
+    else if (difY > difX)
+    { // Vertical |
+        for (let pos = primera.Y ; pos!=( ultima.Y + dirY ) ; pos+= dirY) {
+            palabra += tabla.children[pos].children[primera.X].textContent;
+        }
+    }
+    else
+    { // Diagonal X
+        let X = primera.X;
+        let Y = primera.Y;
+
+        while ( ( X !== ultima.X + dirX ) && ( Y !== ultima.Y + dirY ) ) {
+            palabra += tabla.children[Y].children[X].textContent;
+            X += dirX;  Y += dirY;
+        }
+    }
+    return palabra;
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
