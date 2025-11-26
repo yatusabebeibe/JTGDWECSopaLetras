@@ -262,6 +262,24 @@ function pintarTablero(tablero) {
 }
 
 /**
+ * Devuelve un objeto que contiene la posicion de la primera y ultima celda seleccionada
+ * @param {HTMLTableCellElement} primeraCelda
+ * @param {HTMLTableCellElement} ultimaCelda
+ * @returns { {primera: {X: number, Y: number}, ultima: {X: number, Y: number}} }
+ */
+function posicionLetrasPalabra( primeraCelda, ultimaCelda ) {
+    return {
+        primera: {
+            X: primeraCelda.cellIndex,
+            Y: primeraCelda.parentNode.rowIndex
+        },
+        ultima: {
+            X: ultimaCelda.cellIndex,
+            Y: ultimaCelda.parentNode.rowIndex
+        }
+    };
+}
+/**
  * Funcion para obtener la hora local formateada
  * @returns string
  */
