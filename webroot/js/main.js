@@ -344,6 +344,25 @@ function obtenerPalabra( { primera, ultima } ) {
     }
     return palabra;
 }
+
+/**
+ * Comprueba si la palabra seleccionada era una de las que habia que encontrar
+ * @param {string} palabra La palabra a comprobar
+ * @returns {boolean} Si esxiste o no
+ */
+function comprobarPalabraOrdenada( palabra ) {
+    return listaPalabras.has(palabra);
+}
+
+/**
+ * Comprueba si la palabra seleccionada se ha seleccionado al reves y era una de las que habia que encontrar
+ * @param {string} palabra
+ * @returns {string|false} La palabra invertida o falso si no es una palabra a buscar
+ */
+function comprobarPalabraInvertida( palabra ) {
+    let invertida = palabra.split("").reverse().join("");
+    return listaPalabras.has(invertida) ? invertida : false;
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
