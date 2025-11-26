@@ -1,65 +1,55 @@
 // # --- # Arrays para testing # --- #
 
-const palabrasTest = [
+const palabras2 = [
     "roca",
     "elefante",
-    "bosque"
-];
-const brrrrr = [
-    "brrrrr",
-    "veybe",
-    "xddd"
-];
-const palabras = [
-  "casa",
-  "perro",
-  "arbol",
-  "libro",
-  "sol",
-  "luna",
-  "coche",
-  "niño",
-  "escuela",
-  "ciudad"
-];
-const palabras2 = [
-  "manzana",
-  "perro",
-  "gato",
-  "casa",
-  "escuela",
-  "arbol",
-  "sol",
-  "luna",
-  "montana",
-  "playa",
-  "nino",
-  "nina",
-  "libro",
-  "amigo",
-  "mesa",
-  "silla",
-  "zapato",
-  "corazon",
-  "coche",
-  "reloj",
-  "puerta",
-  "ventana",
-  "pajaro",
-  "flor"
+    "bosque",
+    "casa",
+    "perro",
+    "arbol",
+    "libro",
+    "sol",
+    "luna",
+    "coche",
+    "niño",
+    "escuela",
+    "ciudad",
+    "manzana",
+    "perro",
+    "gato",
+    "casa",
+    "escuela",
+    "arbol",
+    "sol",
+    "luna",
+    "montana",
+    "playa",
+    "libro",
+    "amigo",
+    "mesa",
+    "silla",
+    "zapato",
+    "corazon",
+    "coche",
+    "reloj",
+    "puerta",
+    "ventana",
+    "pajaro",
+    "flor"
 ];
 
+const aEncontradas = [];
 
 // # --- # Crear tablero # --- #
 
-const arrayPalabras = palabras2;
+const listaPalabras = new Set(palabras2);
 
-let dimension = calcularDimension(arrayPalabras);
+let dimension = calcularDimension(listaPalabras);
 let tablero = crearArrayTablero(dimension);
 
 console.info("dimension: ",dimension);
 
-for (const palabra of arrayPalabras) {
+for (const palabra of listaPalabras) {
     let nIntentos = 0,
         posicion = 0,
         direccion = 0,
