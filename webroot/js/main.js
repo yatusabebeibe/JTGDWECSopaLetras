@@ -279,6 +279,29 @@ function posicionLetrasPalabra( primeraCelda, ultimaCelda ) {
         }
     };
 }
+
+/**
+ * 
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones 
+ * @returns {boolean} `boolean` si es o no valido
+ */
+function comprobarSeleccionValida( {primera, ultima} ) {
+    let valido = true;
+
+    if ( valido && (primera.X < 0 || primera.Y < 0 || ultima.X < 0 || ultima.Y < 0) ) {
+        valido = false;
+    }
+    if ( valido && (primera.X > dimension || primera.Y > dimension || ultima.X > dimension || ultima.Y > dimension) ) {
+        valido = false;
+    }
+    if ( valido && (primera.X != ultima.X && primera.Y != ultima.Y) ) {
+        if (Math.abs(primera.X - ultima.X) != Math.abs(primera.Y - ultima.Y)) {
+            valido = false;
+        }
+    }
+
+    return valido;
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
