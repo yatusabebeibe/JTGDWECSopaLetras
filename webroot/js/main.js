@@ -40,6 +40,20 @@ const palabras2 = [
 
 const aEncontradas = [];
 
+// # --- # Comprobaciones iniciales # --- #
+
+if (!navigator.cookieEnabled) {
+    alert("Las cookies están deshabilitadas en su navegador");
+}
+
+const spanInternet = document.getElementById("checkInternet");
+window.onoffline = () => {
+    spanInternet.textContent = "No hay conexion a internet";
+}
+window.ononline = () => {
+    spanInternet.textContent = "";
+}
+
 // # --- # Crear tablero # --- #
 
 const listaPalabras = new Set(palabras2);
