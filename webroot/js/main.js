@@ -336,6 +336,51 @@ function obtenerPalabra( { primera, ultima } ) {
 }
 
 /**
+ * Pinta la seleccion
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones 
+ */
+function pintarPalabra( { primera, ultima } ) {
+    let palabra = "";
+    const x = () => {return Math.floor(Math.random() * 128)+112}
+    const color = `rgb(${x()}, ${x()}, ${x()})`;
+
+    /** @type {HTMLTableElement} */
+    let tabla = document.getElementById("buena");
+
+    let difX = Math.abs(primera.X - ultima.X);
+    let difY = Math.abs(primera.Y - ultima.Y);
+
+    const dirX = primera.X < ultima.X ? 1 : -1 ; // Direccion horizontal -
+    const dirY = primera.Y < ultima.Y ? 1 : -1 ; // Direccion vertical |
+
+    if (difX > difY)
+    { // Horizontal -
+        for (let pos = primera.X; pos != ( ultima.X + dirX ); pos += dirX) {
+            tabla.children[primera.Y].children[pos].style.background = color;
+            console.log(tabla.children[primera.Y].children[pos].style.color);
+        }
+    } 
+    else if (difY > difX)
+    { // Vertical |
+        for (let pos = primera.Y ; pos!=( ultima.Y + dirY ) ; pos+= dirY) {
+            tabla.children[pos].children[primera.X].style.background = color;
+            console.log(tabla.children[pos].children[primera.X].style.color);
+        }
+    }
+    else
+    { // Diagonal X
+        let X = primera.X;
+        let Y = primera.Y;
+
+        while ( ( X !== ultima.X + dirX ) && ( Y !== ultima.Y + dirY ) ) {
+            tabla.children[Y].children[X].style.background = color;
+            console.log(tabla.children[Y].children[X].style.color);
+            X += dirX;  Y += dirY;
+        }
+    }
+}
+
+/**
  * Comprueba si la palabra seleccionada era una de las que habia que encontrar
  * @param {string} palabra La palabra a comprobar
  * @returns {boolean} Si esxiste o no
