@@ -412,6 +412,14 @@ function comprobarPalabraInvertida( palabra ) {
     let invertida = palabra.split("").reverse().join("");
     return listaPalabras.has(invertida) ? invertida : false;
 }
+
+/**
+ * Obtiene todas las puntuaciones almacenadas en localStorage.
+ * @returns {Array<{nombre: string, puntuacion: number}>} Array de objetos con nombre y puntuación.
+ */
+function obtenerPuntuaciones() {
+    return JSON.parse(sessionStorage.getItem("puntuaciones")) || [];
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
