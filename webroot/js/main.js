@@ -420,6 +420,29 @@ function comprobarPalabraInvertida( palabra ) {
 function obtenerPuntuaciones() {
     return JSON.parse(sessionStorage.getItem("puntuaciones")) || [];
 }
+
+/**
+ * Añade una nueva puntuación si no existe o es mejor y mantiene el array ordenado de mayor a menor.
+ * @param {string} nombre - Nombre del usuario.
+ * @param {number} puntuacion - Puntuación obtenida por el jugador.
+ */
+function añadirPuntuacion(nombre, puntuacion) {
+    let puntuaciones = obtenerPuntuaciones();
+
+    let usuario = puntuaciones.find(u => u.nombre === nombre);
+
+    if (usuario) {
+        if (puntuacion > usuario.puntuacion) {
+            usuario.puntuacion = puntuacion;
+        }
+    } else {
+        puntuaciones.push({ nombre, puntuacion });
+    }
+
+    puntuaciones.sort((a, b) => b.puntuacion - a.puntuacion);
+
+    sessionStorage.setItem("puntuaciones", JSON.stringify(puntuaciones));
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
