@@ -312,6 +312,70 @@ function pintarTablero(tablero) {
 }
 
 /**
+ * Pinta el tablero en el DOM añadiendo event Listener a cada celda
+ * @param {string[]} tablero
+ */
+function pintarTableroLinstener(tablero) {
+    const sopaLetras = document.getElementById("sopaLetras");
+
+    while (sopaLetras.children[1]) sopaLetras.remove(sopaLetras.children[1]);
+
+    const tabla = document.createElement("table");
+
+    for (let i = 0; i < tablero.length; i++)
+    {
+        let fila = document.createElement("tr");
+
+        for (let j = 0; j < tablero[i].length; j++)
+        {
+            let celda = document.createElement("td");
+            celda.textContent = tablero[i][j];
+
+            celda.addEventListener("click", (ev) => {
+                ev.preventDefault();
+
+                let seleccionado = document.getElementById("seleccionado");
+                console.log(seleccionado); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+                if (seleccionado == null) {
+                    // console.log("noexiste"); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+                    celda.id = "seleccionado";
+                } else {
+                    // console.log("existe"); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+                    celda.id = ""; seleccionado.id = "";
+
+                    let posiciones = posicionLetrasPalabra(seleccionado, celda);
+                    console.log(posiciones); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+                    let posicionValida = comprobarSeleccionValida(posiciones);
+                    console.log(posicionValida); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+                    if (posicionValida) {
+                        let palabra = obtenerPalabra(posiciones);
+                        console.log(palabra); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+                        if (comprobarPalabraOrdenada(palabra)) {
+                            procesarCorrecta(palabra, posiciones);
+                        } else if (invertida = comprobarPalabraInvertida(palabra)) {
+                            procesarCorrecta(invertida, posiciones);
+                        } else {
+
+                        }
+                    }
+                    console.log(" - - - - - - - - - - - - - - - - - - - "); // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+                }
+
+            });
+
+            fila.appendChild(celda);
+        }
+        tabla.appendChild(fila);
+    }
+    tabla.id = "tablaListener";
+    sopaLetras.appendChild(tabla);
+}
+
+/**
  * Devuelve un objeto que contiene la posicion de la primera y ultima celda seleccionada
  * @param {HTMLTableCellElement} primeraCelda
  * @param {HTMLTableCellElement} ultimaCelda
