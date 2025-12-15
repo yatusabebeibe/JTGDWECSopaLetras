@@ -446,6 +446,38 @@ function añadirPuntuacion(nombre, puntuacion) {
 
     sessionStorage.setItem("puntuaciones", JSON.stringify(puntuaciones));
 }
+
+/**
+ * Rellena la tabla de puntuaciones en el HTML con los datos almacenados en localStorage.
+ * La tabla debe tener un tbody dentro de #puntuaciones.
+ */
+function generarTablaPuntuaciones() {
+    let puntuaciones = obtenerPuntuaciones();
+    let tbody = document.querySelector("#puntuaciones tbody");
+    console.log(tbody);
+
+
+    tbody.innerHTML = "";
+
+    puntuaciones.forEach( (puntuacion, indice) => {
+        let fila = document.createElement("tr");
+
+        let celdaN = document.createElement("td");
+        let celdaNom = document.createElement("td");
+        let celdaPun = document.createElement("td");
+
+        celdaN.textContent = indice + 1;
+        fila.appendChild(celdaN);
+
+        celdaNom.textContent = puntuacion.nombre;
+        fila.appendChild(celdaNom);
+
+        celdaPun.textContent = puntuacion.puntuacion;
+        fila.appendChild(celdaPun);
+
+        tbody.appendChild(fila);
+    });
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
