@@ -622,25 +622,21 @@ function calcularTiempoMaximo(numPalabras) {
 /**
  * Calcula la puntuación total de la sopa de letras según el tiempo y las palabras encontradas.
  *
- * @param {number} tiempo Segundos que se ha tardado en completar el juego.
- * @param {string[]} aPalabrasSopa Array con las palabras de la sopa de letras.
- * @param {Set<string>} aEncontradas Conjunto con las palabras encontradas.
  * @returns {number} La puntuación total redondeada.
  */
-function calcularPuntuacion(tiempo, aPalabrasSopa, aEncontradas) {
-    const encontradas = [...aEncontradas].filter(palabra => aPalabrasSopa.includes(palabra)).length;
+function calcularPuntuacion() {
+    const encontradas = [...aPalabrasEncontradas].filter(palabra => aPalabrasTablero.includes(palabra)).length;
 
     let puntuacion = encontradas * 10;
 
-    const nENCONTRADAS = aEncontradas.length;
-    const nEN_SOPA = aPalabrasSopa.length;
+    const nENCONTRADAS = aPalabrasEncontradas.length;
+    const nEN_SOPA = aPalabrasTablero.length;
 
-    puntuacion *= ( (calcularTiempoMaximo(nENCONTRADAS) - tiempo) / calcularTiempoMaximo(nEN_SOPA) ) + 1;
+    puntuacion *= ( (calcularTiempoMaximo(nENCONTRADAS) - temporizador()) / calcularTiempoMaximo(nEN_SOPA) ) + 1;
 
     if ( nENCONTRADAS < nEN_SOPA ) {
         let factor = nENCONTRADAS / nEN_SOPA;
-        if (factor < .7) factor = .7;
-        puntuacion *= factor;
+        puntuacion *= Math.max(factor, 0.7);
     }
 
     return Math.round(puntuacion);
