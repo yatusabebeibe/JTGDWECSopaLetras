@@ -52,6 +52,34 @@ var dimension = 0;
 /** @type Set<string> - lista con las palabras que vamos a usar para generar la sopa de letras */
 var listaPalabras = null;
 
+// # --- # Lintener Boton iniciar # --- #
+
+const btn = document.getElementById('btnEmpezar');
+btn.addEventListener('click', () => {
+    aTerminado = false;
+
+    // 1. Hacer fade out del botón
+    btn.classList.add('fade-out');
+
+    empezar();
+
+    // 2. Al terminar la animación del botón
+    btn.addEventListener('animationend', function ocultarBtn() {
+        fechaInicioTemporizador = new Date();
+        btn.style.display = 'none';
+        btn.removeEventListener('animationend', ocultarBtn);
+
+        let elementos = ["sopaLetras", "palabras"];
+
+        for (const element of elementos) {
+            let elemento = document.getElementById(element);
+            elemento.classList.add('fade-in');
+            elemento.classList.add('despuesAnimacion');
+            elemento.classList.remove("antesAnimacion");
+        }
+    });
+});
+
 // # --- # Inicio Arrays # --- #
 
 const aPalabrasTablero = []
