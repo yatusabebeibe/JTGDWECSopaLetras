@@ -5,37 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sopa de letras</title>
     <script src="./webroot/js/main.js" defer></script>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-        #sopaLetras{
-            text-align: center;
-            line-height: 25px;
-            td {
-                border: 2px solid black;
-                height: 25px;
-                width: 25px;
-                padding: 0;
-            }
-            table {
-                display: inline-block;
-                margin: 10px;
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="./webroot/css/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded",() =>{
+            let textoHora = document.getElementById("hora");
+            textoHora.innerHTML = obtenerHoraActual();
+            setInterval(() => {
+                textoHora.innerHTML = obtenerHoraActual();
+            }, 1000);
+        })
+    </script>
+    <script>
+        setInterval(() => {
+            document.getElementById("temporizador").innerHTML = temporizador();
+        }, 1000);
+    </script>
 </head>
 <body>
-    <h1>Sopa de letras</h1>
-    <div id="sopaLetras">
-
-    </div>
-    <div id="menuDatos">
-        <!-- <input type="text" id="filas" placeholder="Introduce el num de filas"> -->
-        <!-- <input type="text" id="columnas" placeholder="Introduce el num de columnas"> -->
-         
-        <!-- <button type="button" id="boton">ejemplo</button> -->
-    </div>
+    <header>
+        <h1>Sopa de letras</h1>
+        <span id="checkInternet"></span>
+    </header>
+    <main>
+        <div class="contenedorSopa">
+            <button id="btnEmpezar">Empezar</button>
+            <div id="sopaLetras" class="antesAnimacion">
+                <div id="temporizador"></div>
+            </div>
+            <div id="palabras" class="antesAnimacion"></div>
+        </div>
+        <div id="puntuaciones">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Nombre</th>
+                        <th>Puntuacion</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p id="nombre">Jesús Temprano Gallego</p>
+        <p id="hora"></p>
+    </footer>
 </body>
 </html>
