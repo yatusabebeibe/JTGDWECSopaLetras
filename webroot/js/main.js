@@ -426,7 +426,7 @@ function obtenerPalabra( { primera, ultima } ) {
     let palabra = "";
 
     /** @type {HTMLTableElement} */
-    let tabla = document.getElementById("buena");
+    let tabla = document.getElementById("tablaListener");
 
     let difX = Math.abs(primera.X - ultima.X);
     let difY = Math.abs(primera.Y - ultima.Y);
@@ -469,7 +469,7 @@ function pintarPalabra( { primera, ultima } ) {
     const color = `rgb(${x()}, ${x()}, ${x()})`;
 
     /** @type {HTMLTableElement} */
-    let tabla = document.getElementById("buena");
+    let tabla = document.getElementById("tablaListener");
 
     let difX = Math.abs(primera.X - ultima.X);
     let difY = Math.abs(primera.Y - ultima.Y);
