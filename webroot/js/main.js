@@ -558,6 +558,23 @@ function palabras() {
         elementoListaPalabras.appendChild(pPalabra);
     }
 }
+
+/**
+ * Procesa una palabra correcta encontrada en la sopa de letras.
+ *
+ * @param {string} palabra La palabra que se ha encontrado.
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones Posiciones de la primera y última letra de la palabra en el tablero.
+ */
+function procesarCorrecta(palabra, posiciones) {
+    aPalabrasEncontradas.add(palabra);
+    pintarPalabra(posiciones);
+    palabras();
+
+    if (aPalabrasEncontradas.size == aPalabrasTablero.length) {
+        // Aqui iria lo que pasa al terminar
+        alert("has ganado. (mejoras en proceso)")
+    }
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
