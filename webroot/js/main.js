@@ -675,6 +675,9 @@ function procesarCorrecta(palabra, posiciones) {
 
     if (aPalabrasEncontradas.size == aPalabrasTablero.length) {
         // Aqui iria lo que pasa al terminar
+        terminar();
+    }
+}
 
 /**
  * Termina la partida, pide el nombre del jugador y guarda su puntuación.
