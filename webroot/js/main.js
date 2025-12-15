@@ -478,6 +478,39 @@ function generarTablaPuntuaciones() {
         tbody.appendChild(fila);
     });
 }
+
+/**
+ * Calcula el tiempo aprox en segundos segun el número de palabras.
+ * El tiempo por palabra aumenta según la cantidad total de palabras
+ * y se aplica por igual a todas ellas.
+ *
+ * @param {number} numPalabras Número total de palabras en la sopa.
+ * @returns {number} Tiempo máximo total en segundos.
+ */
+function calcularTiempoMaximo(numPalabras) {
+    if (numPalabras <= 0) return 0;
+
+    const TIEMPO_BASE = 12;
+    const nPALABRAS_TRAMO1 = 5;
+    const TIEMPO_TRAMO2 = 32;
+    const nPALABRAS_TRAMO2 = 24;
+    const FACTOR_AUMENTO = 1.25;
+
+    let tiempoPorPalabra;
+
+    if (numPalabras <= nPALABRAS_TRAMO1) {
+        tiempoPorPalabra = TIEMPO_BASE;
+    }
+    else if (numPalabras <= nPALABRAS_TRAMO2) {
+        const progreso = numPalabras / nPALABRAS_TRAMO2;
+        tiempoPorPalabra = TIEMPO_BASE + (TIEMPO_TRAMO2 - TIEMPO_BASE) * progreso;
+    }
+    else {
+        tiempoPorPalabra = TIEMPO_TRAMO2 * FACTOR_AUMENTO;
+    }
+
+    return Math.round(numPalabras * tiempoPorPalabra);
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
