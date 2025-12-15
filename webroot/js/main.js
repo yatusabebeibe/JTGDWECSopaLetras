@@ -629,7 +629,7 @@ function calcularPuntuacion() {
 
     let puntuacion = encontradas * 10;
 
-    const nENCONTRADAS = aPalabrasEncontradas.length;
+    const nENCONTRADAS = aPalabrasEncontradas.size;
     const nEN_SOPA = aPalabrasTablero.length;
 
     puntuacion *= ( (calcularTiempoMaximo(nENCONTRADAS) - temporizador()) / calcularTiempoMaximo(nEN_SOPA) ) + 1;
