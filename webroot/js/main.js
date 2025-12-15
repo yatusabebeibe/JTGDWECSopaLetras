@@ -675,9 +675,18 @@ function procesarCorrecta(palabra, posiciones) {
 
     if (aPalabrasEncontradas.size == aPalabrasTablero.length) {
         // Aqui iria lo que pasa al terminar
-        alert("has ganado. (mejoras en proceso)")
-    }
+
+/**
+ * Termina la partida, pide el nombre del jugador y guarda su puntuación.
+ */
+function terminar() {
+    const puntuacion = calcularPuntuacion();
+    const nombre = prompt("¡Has ganado!.\nIntroduce tu nombre para añadir tu puntuacion a la tabla").trim() || "Desconocido";
+
+    añadirPuntuacion(nombre, puntuacion);
+    generarTablaPuntuaciones();
 }
+
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
