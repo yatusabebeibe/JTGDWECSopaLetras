@@ -186,14 +186,14 @@ function calcularPosicionAleatoria(dimension) {
  */
 function calcularDireccionAleatoria() {
     const movimientos = [
-        [-1, 0],  // 0 ↑
-        [-1, 1],  // 1 ↗
+        // [-1, 0],  // 0 ↑
+        // [-1, 1],  // 1 ↗
         [0, 1],   // 2 →
         [1, 1],   // 3 ↘
         [1, 0],   // 4 ↓
-        [1, -1],  // 5 ↙
-        [0, -1],  // 6 ←
-        [-1, -1]  // 7 ↖
+        // [1, -1],  // 5 ↙
+        // [0, -1],  // 6 ←
+        // [-1, -1]  // 7 ↖
     ];
     const direccion = parseInt(Math.random()*movimientos.length);
     return {
