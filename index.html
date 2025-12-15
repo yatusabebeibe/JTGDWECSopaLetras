@@ -15,14 +15,36 @@
             }, 1000);
         })
     </script>
+    <script>
+        setInterval(() => {
+            document.getElementById("temporizador").innerHTML = temporizador();
+        }, 1000);
+    </script>
 </head>
 <body>
     <header>
         <h1>Sopa de letras</h1>
+        <span id="checkInternet"></span>
     </header>
     <main>
-        <div id="sopaLetras">
-
+        <div class="contenedorSopa">
+            <button id="btnEmpezar">Empezar</button>
+            <div id="sopaLetras" class="antesAnimacion">
+                <div id="temporizador"></div>
+            </div>
+            <div id="palabras" class="antesAnimacion"></div>
+        </div>
+        <div id="puntuaciones">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Nombre</th>
+                        <th>Puntuacion</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </main>
     <footer>
