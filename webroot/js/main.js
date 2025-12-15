@@ -538,6 +538,26 @@ function calcularPuntuacion(tiempo, aPalabrasSopa, aEncontradas) {
 
     return Math.round(puntuacion);
 }
+
+/**
+ * Muestra en el DOM la lista de palabras de la sopa de letras,
+ * marcando las que ya han sido encontradas.
+ */
+function palabras() {
+    let elementoListaPalabras = document.getElementById("palabras");
+
+    elementoListaPalabras.innerHTML = "";
+
+    for (const palabra of aPalabrasTablero) {
+        let pPalabra = document.createElement("p");
+
+        pPalabra.innerText = palabra;
+
+        if (aPalabrasEncontradas.has(palabra))  pPalabra.classList.add("encontrada");
+
+        elementoListaPalabras.appendChild(pPalabra);
+    }
+}
 /**
  * Funcion para obtener la hora local formateada
  * @returns string
