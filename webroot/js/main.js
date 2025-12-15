@@ -90,8 +90,11 @@ function empezar() {
     pintarTableroLinstener(tablero);
 
     console.log(tablero);
-}
-empezar();
+
+// # --- # Tabla puntuacion # --- #
+
+añadirPuntuacion("yokese", 29);
+generarTablaPuntuaciones();
 
 // # --- # FUNCIONES # --- #
 
