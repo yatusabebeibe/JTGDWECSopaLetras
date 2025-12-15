@@ -56,39 +56,42 @@ window.ononline = () => {
 
 // # --- # Crear tablero # --- #
 
-const listaPalabras = new Set(palabras2);
+function empezar() {
+    listaPalabras = new Set(palabras2);
 
-let dimension = calcularDimension(listaPalabras);
-let tablero = crearArrayTablero(dimension);
+    dimension = calcularDimension(listaPalabras);
+    let tablero = crearArrayTablero(dimension);
 
-console.info("dimension: ",dimension);
+    console.info("dimension: ",dimension);
 
-for (const palabra of listaPalabras) {
-    let nIntentos = 0,
-        posicion = 0,
-        direccion = 0,
-        esValida = false
-    ;
-    do {
-        posicion = calcularPosicionAleatoria(dimension);
-        direccion = calcularDireccionAleatoria();
-        esValida = comprobarPosicionValida(tablero,palabra,posicion,direccion);
+    for (const palabra of listaPalabras) {
+        let nIntentos = 0,
+            posicion = null,
+            direccion = 0,
+            esValida = false
+        ;
+        do {
+            posicion = calcularPosicionAleatoria(dimension);
+            direccion = calcularDireccionAleatoria();
+            esValida = comprobarPosicionValida(tablero,palabra,posicion,direccion);
 
-        nIntentos++;
-    } while (!esValida && nIntentos < 20);
+            nIntentos++;
+        } while (!esValida && nIntentos < 50);
 
-    if (esValida) {
-        escribirPalabra(tablero,palabra,posicion,direccion);
-    } else {
-        console.error(palabra, "no ha encontrado sitio valido");
+        if (esValida) {
+            escribirPalabra(tablero,palabra,posicion,direccion);
+        } else {
+            console.error(palabra, "no ha encontrado sitio valido");
+        }
     }
+
+    // pintarTablero(tablero);
+    rellenarEspaciosTablero(tablero);
+    pintarTableroLinstener(tablero);
+
+    console.log(tablero);
 }
-
-pintarTablero(tablero);
-rellenarEspaciosTablero(tablero);
-pintarTablero(tablero);
-
-console.log(tablero);
+empezar();
 
 // # --- # FUNCIONES # --- #
 
