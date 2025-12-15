@@ -95,7 +95,7 @@ console.log(tablero);
 /**
  * <Expicacion>
  * @param {Array} aPalabras - Array de palabras para calcular el alto/ancho minimo.
- * @returns {number} dimension - 
+ * @returns {number} dimension -
 */
 function calcularDimension(aPalabras) {
     let masLarga=0, total=0;
@@ -111,8 +111,8 @@ function calcularDimension(aPalabras) {
 }
 
 /**
- * 
- * @param {number} dimension 
+ *
+ * @param {number} dimension
  * @returns {Array} Array del tablero
  */
 function crearArrayTablero(dimension) {
@@ -124,8 +124,8 @@ function crearArrayTablero(dimension) {
 }
 
 /**
- * 
- * @param {number} dimension 
+ *
+ * @param {number} dimension
  * @returns {{posFila: number, posCol: number}} posicion
  */
 function calcularPosicionAleatoria(dimension) {
@@ -157,11 +157,11 @@ function calcularDireccionAleatoria() {
 }
 
 /**
- * 
- * @param {Array} tablero 
- * @param {string} palabra 
+ *
+ * @param {Array} tablero
+ * @param {string} palabra
  * @param {{posFila: number, posCol: number}} posicion
- * @param {{direcFila:number, direcCol:number}} direccion 
+ * @param {{direcFila:number, direcCol:number}} direccion
  * @returns {boolean}
  */
 function comprobarPosicionValida(tablero, palabra, posicion, direccion) {
@@ -169,7 +169,7 @@ function comprobarPosicionValida(tablero, palabra, posicion, direccion) {
     const nCol = tablero[0].length;
     const {posFila, posCol} = posicion;
     const {direcFila, direcCol} = direccion;
-    
+
     const ultimaFila = posFila + direcFila * (palabra.length - 1);
     const ultimaCol = posCol + direcCol * (palabra.length - 1);
 
@@ -195,11 +195,11 @@ function comprobarPosicionValida(tablero, palabra, posicion, direccion) {
     return true;
 }
 /**
- * 
- * @param {Array} tablero 
- * @param {string} palabra 
+ *
+ * @param {Array} tablero
+ * @param {string} palabra
  * @param {{posFila: number, posCol: number}} posicion
- * @param {{direcFila:number, direcCol:number}} direccion 
+ * @param {{direcFila:number, direcCol:number}} direccion
  */
 function escribirPalabra(tablero, palabra, posicion, direccion) {
     const {posFila, posCol} = posicion;
@@ -208,14 +208,14 @@ function escribirPalabra(tablero, palabra, posicion, direccion) {
     for (let i = 0; i < palabra.length; i++){
         let fila = posFila + i * direcFila;
         let celda = posCol + i * direcCol;
-        
+
         tablero[fila][celda] = palabra[i];
     }
 }
 
 /**
- * 
- * @param {Array} tablero 
+ *
+ * @param {Array} tablero
  * @returns Array rellenado con letras
  */
 function rellenarEspaciosTablero(tablero) {
@@ -243,7 +243,7 @@ function rellenarEspaciosTablero(tablero) {
 
 /**
  * Pinta el tablero en el DOM
- * @param {string[]} tablero 
+ * @param {string[]} tablero
  */
 function pintarTablero(tablero) {
     const sopaLetras = document.getElementById("sopaLetras");
@@ -285,8 +285,8 @@ function posicionLetrasPalabra( primeraCelda, ultimaCelda ) {
 }
 
 /**
- * 
- * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones 
+ *
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones
  * @returns {boolean} `boolean` si es o no valido
  */
 function comprobarSeleccionValida( {primera, ultima} ) {
@@ -309,7 +309,7 @@ function comprobarSeleccionValida( {primera, ultima} ) {
 
 /**
  * Obtiene la palabra en el orden de la seleccion
- * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones 
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones
  * @returns {string} `string` La palabra seleccionada
  */
 function obtenerPalabra( { primera, ultima } ) {
@@ -329,7 +329,7 @@ function obtenerPalabra( { primera, ultima } ) {
         for (let pos = primera.X; pos != ( ultima.X + dirX ); pos += dirX) {
             palabra += tabla.children[primera.Y].children[pos].textContent;
         }
-    } 
+    }
     else if (difY > difX)
     { // Vertical |
         for (let pos = primera.Y ; pos!=( ultima.Y + dirY ) ; pos+= dirY) {
@@ -351,7 +351,7 @@ function obtenerPalabra( { primera, ultima } ) {
 
 /**
  * Pinta la seleccion
- * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones 
+ * @param {{primera: {X: number, Y: number}, ultima: {X: number, Y: number}}} posiciones
  */
 function pintarPalabra( { primera, ultima } ) {
     let palabra = "";
@@ -373,7 +373,7 @@ function pintarPalabra( { primera, ultima } ) {
             tabla.children[primera.Y].children[pos].style.background = color;
             console.log(tabla.children[primera.Y].children[pos].style.color);
         }
-    } 
+    }
     else if (difY > difX)
     { // Vertical |
         for (let pos = primera.Y ; pos!=( ultima.Y + dirY ) ; pos+= dirY) {
