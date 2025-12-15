@@ -38,6 +38,19 @@ const palabras2 = [
     "flor"
 ];
 
+// # --- # Variables Globales # --- #
+
+/** @type boolean - si ha terminado o no */
+var aTerminado = false;
+
+/** @type Date - fecha y hora en la que inniciamos la sopa de letra */
+var fechaInicioTemporizador = null;
+
+/** @type number - alto y ancho de la sopa de letra */
+var dimension = 0;
+
+/** @type Set<string> - lista con las palabras que vamos a usar para generar la sopa de letras */
+var listaPalabras = null;
 
 // # --- # Inicio Arrays # --- #
 
