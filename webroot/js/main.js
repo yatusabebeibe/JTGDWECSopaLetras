@@ -584,3 +584,14 @@ function obtenerHoraActual() {
 
     return instante.toLocaleTimeString();
 }
+
+/**
+ * Devuelve el num de seg desde que se empezo la sopa de letras
+ * @returns {int} segundos desde que se empezo la sopa de letras
+ */
+function temporizador() {
+    segundos = parseInt( ( (new Date()) - fechaInicioTemporizador ) / 1000 );
+    segundos = fechaInicioTemporizador ? segundos : 0;
+
+    return segundos;
+}
