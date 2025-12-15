@@ -134,6 +134,7 @@ function empezar() {
 // # --- # Tabla puntuacion # --- #
 
 añadirPuntuacion("yokese", 29);
+añadirPuntuacion("jesus", 73);
 generarTablaPuntuaciones();
 
 // # --- # FUNCIONES # --- #
