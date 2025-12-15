@@ -38,7 +38,11 @@ const palabras2 = [
     "flor"
 ];
 
-const aEncontradas = [];
+
+// # --- # Inicio Arrays # --- #
+
+const aPalabrasTablero = []
+const aPalabrasEncontradas = new Set();
 
 // # --- # Comprobaciones iniciales # --- #
 
