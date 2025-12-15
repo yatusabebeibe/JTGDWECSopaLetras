@@ -83,6 +83,7 @@ function empezar() {
         } while (!esValida && nIntentos < 50);
 
         if (esValida) {
+            aPalabrasTablero.push(palabra)
             escribirPalabra(tablero,palabra,posicion,direccion);
         } else {
             console.error(palabra, "no ha encontrado sitio valido");
