@@ -90,6 +90,8 @@ function empezar() {
     pintarTableroLinstener(tablero);
 
     console.log(tablero);
+    palabras();
+}
 
 // # --- # Tabla puntuacion # --- #
 
