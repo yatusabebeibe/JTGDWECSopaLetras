@@ -649,6 +649,7 @@ function calcularPuntuacion() {
  */
 function palabras() {
     let elementoListaPalabras = document.getElementById("palabras");
+    let gridPalabras = document.createElement("div");
 
     elementoListaPalabras.innerHTML = "";
 
@@ -659,8 +660,9 @@ function palabras() {
 
         if (aPalabrasEncontradas.has(palabra))  pPalabra.classList.add("encontrada");
 
-        elementoListaPalabras.appendChild(pPalabra);
+        gridPalabras.appendChild(pPalabra);
     }
+    elementoListaPalabras.appendChild(gridPalabras);
 }
 
 /**

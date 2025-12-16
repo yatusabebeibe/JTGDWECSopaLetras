@@ -132,6 +132,10 @@ header,footer {
 #palabras {
     display: var(--grid);
     opacity: 0;
+    width: 100%;
+}
+#palabras > div {
+    display: var(--grid);
     grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
     gap: 5px;
     justify-content: center;
@@ -140,8 +144,8 @@ header,footer {
     line-height: 1.4rem;
     width: 100%;
 }
-#palabras > p {width: min-content;}
-#palabras > .encontrada {
+#palabras > div > p {width: min-content;}
+#palabras > div > .encontrada {
     color: gray;
     text-decoration: line-through;
     font-weight: lighter;
