@@ -98,7 +98,7 @@ header,footer {
     overflow-y: auto;
     max-height: 100%; /* nunca más que main */
     align-self: stretch;
-    width: 375px;
+    width: 433px;
     padding: 10px;
     padding-top: 0;
     padding-bottom: 40px;

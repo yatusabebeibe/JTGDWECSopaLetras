@@ -133,8 +133,8 @@ function empezar() {
 
 // # --- # Tabla puntuacion # --- #
 
-añadirPuntuacion("yokese", 29);
-añadirPuntuacion("jesus", 73);
+añadirPuntuacion("yokese", 29, 73, 4);
+añadirPuntuacion("jesus", 73, 25, 5);
 generarTablaPuntuaciones();
 
 // # --- # FUNCIONES # --- #
@@ -537,7 +537,7 @@ function obtenerPuntuaciones() {
  * @param {string} nombre - Nombre del usuario.
  * @param {number} puntuacion - Puntuación obtenida por el jugador.
  */
-function añadirPuntuacion(nombre, puntuacion) {
+function añadirPuntuacion(nombre, puntuacion, seg, nPal) {
     let puntuaciones = obtenerPuntuaciones();
 
     let usuario = puntuaciones.find(u => u.nombre === nombre);
@@ -545,9 +545,11 @@ function añadirPuntuacion(nombre, puntuacion) {
     if (usuario) {
         if (puntuacion > usuario.puntuacion) {
             usuario.puntuacion = puntuacion;
+            usuario.seg = seg;
+            usuario.nPal = nPal;
         }
     } else {
-        puntuaciones.push({ nombre, puntuacion });
+        puntuaciones.push({ nombre, puntuacion, seg, nPal });
     }
 
     puntuaciones.sort((a, b) => b.puntuacion - a.puntuacion);
@@ -573,6 +575,8 @@ function generarTablaPuntuaciones() {
         let celdaN = document.createElement("td");
         let celdaNom = document.createElement("td");
         let celdaPun = document.createElement("td");
+        let celdaSeg = document.createElement("td");
+        let celdanPal = document.createElement("td");
 
         celdaN.textContent = indice + 1;
         fila.appendChild(celdaN);
@@ -582,6 +586,12 @@ function generarTablaPuntuaciones() {
 
         celdaPun.textContent = puntuacion.puntuacion;
         fila.appendChild(celdaPun);
+
+        celdaSeg.textContent = segATiempo(puntuacion.seg);
+        fila.appendChild(celdaSeg);
+
+        celdanPal.textContent = puntuacion.nPal;
+        fila.appendChild(celdanPal);
 
         tbody.appendChild(fila);
     });
@@ -686,10 +696,12 @@ function procesarCorrecta(palabra, posiciones) {
  * Termina la partida, pide el nombre del jugador y guarda su puntuación.
  */
 function terminar() {
+    const tiempo = temporizador();
+    const nPal = aPalabrasEncontradas.size;
     const puntuacion = calcularPuntuacion();
     const nombre = prompt("¡Has ganado!.\nIntroduce tu nombre para añadir tu puntuacion a la tabla").trim() || "Desconocido";
 
-    añadirPuntuacion(nombre, puntuacion);
+    añadirPuntuacion(nombre, puntuacion, tiempo, nPal);
     generarTablaPuntuaciones();
 }
 

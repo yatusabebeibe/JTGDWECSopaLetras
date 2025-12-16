@@ -17,7 +17,7 @@
     </script>
     <script>
         setInterval(() => {
-            document.getElementById("temporizador").innerHTML = temporizador();
+            document.getElementById("temporizador").innerHTML = segATiempo(temporizador());
         }, 1000);
     </script>
 </head>
@@ -41,6 +41,8 @@
                         <th>Nº</th>
                         <th>Nombre</th>
                         <th>Puntuacion</th>
+                        <th>Tiempo</th>
+                        <th>Nº Pal</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
