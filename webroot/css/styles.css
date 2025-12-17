@@ -15,7 +15,35 @@ h1,h2,h3,p {margin: 0;}
 table {
     border-collapse: collapse;
 }
+footer {
+    padding-top: 15px;
+    margin: auto;
+    background-color: #459650;
+    text-align: center;
+    height: var(--altoFooter);
+    color: white;
 
+    a {
+        text-decoration: aquamarine wavy underline;
+        color: aquamarine;
+        transition: 0.3s;
+    }
+    a:hover {
+        color: blue;
+        mix-blend-mode: multiply;
+        text-decoration: none;
+    }
+    p {line-height: 30px; display: inline-block;}
+    span {margin-right: 15px;}
+    img {
+        display: inline-block;
+        height: 25px;
+        translate: 0 25%;
+        transition: all .3s ease-in-out;
+    }
+    span img:hover {transform: scale(1.15);}
+    span > a {text-decoration: none;}
+}
 .contenedorSopa {
     min-width: clamp(400px, 50%, 50%);
     display: flex;
