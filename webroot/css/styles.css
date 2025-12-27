@@ -44,7 +44,7 @@ footer {
     span img:hover {transform: scale(1.15);}
     span > a {text-decoration: none;}
 }
-.contenedorSopa {
+#contenedorSopa {
     min-width: clamp(400px, 50%, 50%);
     display: flex;
     flex-flow: column nowrap;
