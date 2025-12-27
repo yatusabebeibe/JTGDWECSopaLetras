@@ -17,8 +17,9 @@
     </script>
     <script>
         setInterval(() => {
+            if (!aTerminado)
             document.getElementById("temporizador").innerHTML = segATiempo(temporizador());
-        }, 1000);
+        }, 333);
     </script>
 </head>
 <body>

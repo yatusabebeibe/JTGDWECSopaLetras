@@ -33,7 +33,7 @@ const palabras2 = [
 // # --- # Variables Globales # --- #
 
 /** @type boolean - si ha terminado o no */
-var aTerminado = false;
+var aTerminado = true;
 
 /** @type Date - fecha y hora en la que inniciamos la sopa de letra */
 var fechaInicioTemporizador = null;
@@ -702,6 +702,7 @@ function terminar() {
     const nombre = prompt("¡Has ganado!.\nIntroduce tu nombre para añadir tu puntuacion a la tabla").trim() || "Desconocido";
 
     añadirPuntuacion(nombre, puntuacion, tiempo, nPal);
+    aTerminado = true;
     generarTablaPuntuaciones();
 }
 
