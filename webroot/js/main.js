@@ -46,20 +46,26 @@ var listaPalabras = null;
 
 // # --- # Lintener Boton iniciar # --- #
 
-const btn = document.getElementById('btnEmpezar');
-btn.addEventListener('click', () => {
+const btnEmpezar = document.getElementById('btnEmpezar');
+const btnLimpiarTablero = document.getElementById('btnLimpiarTablero');
+
+btnLimpiarTablero.style.display = "none";
+btnLimpiarTablero.addEventListener('click', () => {limpiarTablero()});
+
+btnEmpezar.addEventListener('click', () => {
     aTerminado = false;
 
     // 1. Hacer fade out del botón
-    btn.classList.add('fade-out');
+    btnEmpezar.classList.add('fade-out');
 
     empezar();
 
     // 2. Al terminar la animación del botón
-    btn.addEventListener('animationend', function ocultarBtn() {
+    btnEmpezar.addEventListener('animationend', function ocultarBtn() {
         fechaInicioTemporizador = new Date();
-        btn.style.display = 'none';
-        btn.removeEventListener('animationend', ocultarBtn);
+        btnEmpezar.parentElement.style.display = 'none';
+        btnEmpezar.style.display = 'none';
+        btnEmpezar.removeEventListener('animationend', ocultarBtn);
 
         let elementos = ["sopaLetras", "palabras"];
 
@@ -730,6 +736,34 @@ function terminar() {
     }
 
     prompt.addEventListener("submit", enviar);
+    btnLimpiarTablero.style.display = "";
+    btnEmpezar.parentElement.style.display = "";
+}
+
+function limpiarTablero() {
+    const sopaLetras = document.getElementById("sopaLetras");
+    const palabras = document.getElementById("palabras");
+    while (tabla = sopaLetras.children[1])  tabla.remove();
+    palabras.innerHTML = "";
+    fechaInicioTemporizador = null;
+
+    let elementos = [sopaLetras, palabras]
+
+    for (const elemento of elementos) {
+        elemento.classList.add('fade-out');
+        elemento.classList.remove('fade-in');
+        elemento.classList.add("antesAnimacion");
+        elemento.classList.remove('despuesAnimacion');
+    }
+    aPalabrasTablero.length = 0
+    aPalabrasEncontradas.clear();
+
+    btnLimpiarTablero.style.display = "none";
+
+    btnEmpezar.parentElement.style.display = "";
+    btnEmpezar.style.display = '';
+    btnEmpezar.classList.remove('fade-out');
+    btnEmpezar.classList.add('fade-in');
 }
 
 /**
