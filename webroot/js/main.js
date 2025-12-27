@@ -697,6 +697,7 @@ function procesarCorrecta(palabra, posiciones) {
  */
 function terminar() {
     const tiempo = temporizador();
+    aTerminado = true;
     const nPal = aPalabrasEncontradas.size;
     const puntuacion = calcularPuntuacion();
 
@@ -720,7 +721,6 @@ function terminar() {
             const nombre = input.value;
 
             añadirPuntuacion(nombre, puntuacion, tiempo, nPal);
-            aTerminado = true;
             generarTablaPuntuaciones();
 
             prompt.removeEventListener("submit", enviar);
