@@ -193,10 +193,12 @@ header,footer {
 .antesAnimacion {
     --flex: none;
     --grid: none;
+    --block: none;
 }
 .despuesAnimacion {
     --flex: flex;
     --grid: grid;
+    --block: block;
 }
 
 .fade-out { animation: fadeOutBtn 0.75s forwards; }
@@ -207,3 +209,69 @@ div.fade-in { animation: fadeInDivs 1s forwards; }
     top: -15px;
     left: 50%;
 }
+
+#fondoPrompt {
+    display: var(--block);
+    size: 0;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh; width: 100vw;
+    background: rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+#cuerpoPrompt {
+    position: absolute;
+    padding: 20px;
+    border: 6px solid #4e9645;
+    border-radius: 10px;
+    min-height: 10vh;
+    min-width: 10vw; max-width: 700px;
+    background: rgb(255, 255, 255);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 5px 5px 15px 3px #000000;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+#cuerpoPrompt h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+    color: #2f5e2a;
+    text-align: center;
+}
+
+#datoPrompt {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border: 2px solid #4e9645;
+    border-radius: 5px;
+    outline: none;
+}
+
+#datoPrompt:focus {
+    border-color: #2f5e2a;
+}
+#datoPrompt.error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+#cuerpoPrompt button {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    background: #4e9645;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cuerpoPrompt button:hover {
+    background: #3c7435;
+}
+

@@ -699,11 +699,36 @@ function terminar() {
     const tiempo = temporizador();
     const nPal = aPalabrasEncontradas.size;
     const puntuacion = calcularPuntuacion();
-    const nombre = prompt("¡Has ganado!.\nIntroduce tu nombre para añadir tu puntuacion a la tabla").trim() || "Desconocido";
 
-    añadirPuntuacion(nombre, puntuacion, tiempo, nPal);
-    aTerminado = true;
-    generarTablaPuntuaciones();
+    const fondo = document.getElementById("fondoPrompt");
+    const prompt = document.getElementById("cuerpoPrompt");
+    const mensaje = document.getElementById("msgPrompt");
+    const input = document.getElementById("datoPrompt");
+
+    mensaje.innerText = "¡Has ganado! Introduce tu nombre para añadir tu puntuación";
+    input.placeholder = "Tu nombre";
+
+    fondo.classList.add("despuesAnimacion");
+
+    function enviar(ev) {
+        ev.preventDefault();
+
+        if (!input.value.trim()) {
+            input.classList.add("error");
+            setTimeout(() => input.classList.remove("error"), 333);
+        } else {
+            const nombre = input.value;
+
+            añadirPuntuacion(nombre, puntuacion, tiempo, nPal);
+            aTerminado = true;
+            generarTablaPuntuaciones();
+
+            prompt.removeEventListener("submit", enviar);
+            fondo.classList.remove("despuesAnimacion");
+        }
+    }
+
+    prompt.addEventListener("submit", enviar);
 }
 
 /**
