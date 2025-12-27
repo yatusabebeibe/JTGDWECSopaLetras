@@ -17,8 +17,9 @@
     </script>
     <script>
         setInterval(() => {
-            document.getElementById("temporizador").innerHTML = temporizador();
-        }, 1000);
+            if (!aTerminado)
+            document.getElementById("temporizador").innerHTML = segATiempo(temporizador());
+        }, 333);
     </script>
 </head>
 <body>
@@ -27,8 +28,11 @@
         <span id="checkInternet"></span>
     </header>
     <main>
-        <div class="contenedorSopa">
-            <button id="btnEmpezar">Empezar</button>
+        <div id="contenedorSopa">
+            <div class="botones">
+                <button id="btnEmpezar">Empezar</button>
+                <button id="btnLimpiarTablero">Volver a jugar</button>
+            </div>
             <div id="sopaLetras" class="antesAnimacion">
                 <div id="temporizador"></div>
             </div>
@@ -41,6 +45,8 @@
                         <th>Nº</th>
                         <th>Nombre</th>
                         <th>Puntuacion</th>
+                        <th>Tiempo</th>
+                        <th>Nº Pal</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -48,8 +54,20 @@
         </div>
     </main>
     <footer>
-        <p id="nombre">Jesús Temprano Gallego</p>
+        <p>
+            <span><a href="https://github.com/yatusabebeibe/JTGDWECSopaLetras/" target="_blank">
+                <img src="./webroot/images/github.svg">
+            </a></span>
+            <a href="../../" target="_self">Jesús Temprano Gallego</a> | 17/12/2025
+        </p>
         <p id="hora"></p>
     </footer>
+    <div id="fondoPrompt" class="antesAnimacion">
+        <form id="cuerpoPrompt">
+            <h3 id="msgPrompt"></h3>
+            <input type="text" id="datoPrompt">
+            <button type="submit" id="btnEnviar">Enviar</button>
+        </form>
+    </div>
 </body>
 </html>

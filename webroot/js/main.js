@@ -33,7 +33,7 @@ const palabras2 = [
 // # --- # Variables Globales # --- #
 
 /** @type boolean - si ha terminado o no */
-var aTerminado = false;
+var aTerminado = true;
 
 /** @type Date - fecha y hora en la que inniciamos la sopa de letra */
 var fechaInicioTemporizador = null;
@@ -46,20 +46,26 @@ var listaPalabras = null;
 
 // # --- # Lintener Boton iniciar # --- #
 
-const btn = document.getElementById('btnEmpezar');
-btn.addEventListener('click', () => {
+const btnEmpezar = document.getElementById('btnEmpezar');
+const btnLimpiarTablero = document.getElementById('btnLimpiarTablero');
+
+btnLimpiarTablero.style.display = "none";
+btnLimpiarTablero.addEventListener('click', () => {limpiarTablero()});
+
+btnEmpezar.addEventListener('click', () => {
     aTerminado = false;
 
     // 1. Hacer fade out del botón
-    btn.classList.add('fade-out');
+    btnEmpezar.classList.add('fade-out');
 
     empezar();
 
     // 2. Al terminar la animación del botón
-    btn.addEventListener('animationend', function ocultarBtn() {
+    btnEmpezar.addEventListener('animationend', function ocultarBtn() {
         fechaInicioTemporizador = new Date();
-        btn.style.display = 'none';
-        btn.removeEventListener('animationend', ocultarBtn);
+        btnEmpezar.parentElement.style.display = 'none';
+        btnEmpezar.style.display = 'none';
+        btnEmpezar.removeEventListener('animationend', ocultarBtn);
 
         let elementos = ["sopaLetras", "palabras"];
 
@@ -133,8 +139,8 @@ function empezar() {
 
 // # --- # Tabla puntuacion # --- #
 
-añadirPuntuacion("yokese", 29);
-añadirPuntuacion("jesus", 73);
+añadirPuntuacion("yokese", 29, 73, 4);
+añadirPuntuacion("jesus", 73, 25, 5);
 generarTablaPuntuaciones();
 
 // # --- # FUNCIONES # --- #
@@ -537,7 +543,7 @@ function obtenerPuntuaciones() {
  * @param {string} nombre - Nombre del usuario.
  * @param {number} puntuacion - Puntuación obtenida por el jugador.
  */
-function añadirPuntuacion(nombre, puntuacion) {
+function añadirPuntuacion(nombre, puntuacion, seg, nPal) {
     let puntuaciones = obtenerPuntuaciones();
 
     let usuario = puntuaciones.find(u => u.nombre === nombre);
@@ -545,9 +551,11 @@ function añadirPuntuacion(nombre, puntuacion) {
     if (usuario) {
         if (puntuacion > usuario.puntuacion) {
             usuario.puntuacion = puntuacion;
+            usuario.seg = seg;
+            usuario.nPal = nPal;
         }
     } else {
-        puntuaciones.push({ nombre, puntuacion });
+        puntuaciones.push({ nombre, puntuacion, seg, nPal });
     }
 
     puntuaciones.sort((a, b) => b.puntuacion - a.puntuacion);
@@ -573,6 +581,8 @@ function generarTablaPuntuaciones() {
         let celdaN = document.createElement("td");
         let celdaNom = document.createElement("td");
         let celdaPun = document.createElement("td");
+        let celdaSeg = document.createElement("td");
+        let celdanPal = document.createElement("td");
 
         celdaN.textContent = indice + 1;
         fila.appendChild(celdaN);
@@ -582,6 +592,12 @@ function generarTablaPuntuaciones() {
 
         celdaPun.textContent = puntuacion.puntuacion;
         fila.appendChild(celdaPun);
+
+        celdaSeg.textContent = segATiempo(puntuacion.seg);
+        fila.appendChild(celdaSeg);
+
+        celdanPal.textContent = puntuacion.nPal;
+        fila.appendChild(celdanPal);
 
         tbody.appendChild(fila);
     });
@@ -649,6 +665,7 @@ function calcularPuntuacion() {
  */
 function palabras() {
     let elementoListaPalabras = document.getElementById("palabras");
+    let gridPalabras = document.createElement("div");
 
     elementoListaPalabras.innerHTML = "";
 
@@ -659,8 +676,9 @@ function palabras() {
 
         if (aPalabrasEncontradas.has(palabra))  pPalabra.classList.add("encontrada");
 
-        elementoListaPalabras.appendChild(pPalabra);
+        gridPalabras.appendChild(pPalabra);
     }
+    elementoListaPalabras.appendChild(gridPalabras);
 }
 
 /**
@@ -684,11 +702,68 @@ function procesarCorrecta(palabra, posiciones) {
  * Termina la partida, pide el nombre del jugador y guarda su puntuación.
  */
 function terminar() {
+    const tiempo = temporizador();
+    aTerminado = true;
+    const nPal = aPalabrasEncontradas.size;
     const puntuacion = calcularPuntuacion();
-    const nombre = prompt("¡Has ganado!.\nIntroduce tu nombre para añadir tu puntuacion a la tabla").trim() || "Desconocido";
 
-    añadirPuntuacion(nombre, puntuacion);
-    generarTablaPuntuaciones();
+    const fondo = document.getElementById("fondoPrompt");
+    const prompt = document.getElementById("cuerpoPrompt");
+    const mensaje = document.getElementById("msgPrompt");
+    const input = document.getElementById("datoPrompt");
+
+    mensaje.innerText = "¡Has ganado! Introduce tu nombre para añadir tu puntuación";
+    input.placeholder = "Tu nombre";
+
+    fondo.classList.add("despuesAnimacion");
+
+    function enviar(ev) {
+        ev.preventDefault();
+
+        if (!input.value.trim()) {
+            input.classList.add("error");
+            setTimeout(() => input.classList.remove("error"), 400);
+        } else {
+            const nombre = input.value;
+
+            añadirPuntuacion(nombre, puntuacion, tiempo, nPal);
+            generarTablaPuntuaciones();
+
+            prompt.removeEventListener("submit", enviar);
+            fondo.classList.remove("despuesAnimacion");
+        }
+        input.value = "";
+    }
+
+    prompt.addEventListener("submit", enviar);
+    btnLimpiarTablero.style.display = "";
+    btnEmpezar.parentElement.style.display = "";
+}
+
+function limpiarTablero() {
+    const sopaLetras = document.getElementById("sopaLetras");
+    const palabras = document.getElementById("palabras");
+    while (tabla = sopaLetras.children[1])  tabla.remove();
+    palabras.innerHTML = "";
+    fechaInicioTemporizador = null;
+
+    let elementos = [sopaLetras, palabras]
+
+    for (const elemento of elementos) {
+        elemento.classList.add('fade-out');
+        elemento.classList.remove('fade-in');
+        elemento.classList.add("antesAnimacion");
+        elemento.classList.remove('despuesAnimacion');
+    }
+    aPalabrasTablero.length = 0
+    aPalabrasEncontradas.clear();
+
+    btnLimpiarTablero.style.display = "none";
+
+    btnEmpezar.parentElement.style.display = "";
+    btnEmpezar.style.display = '';
+    btnEmpezar.classList.remove('fade-out');
+    btnEmpezar.classList.add('fade-in');
 }
 
 /**
@@ -710,4 +785,24 @@ function temporizador() {
     segundos = fechaInicioTemporizador ? segundos : 0;
 
     return segundos;
+}
+
+/**
+ * Convierte segundos a formato legible automáticamente.
+ * Si son menos de 3600 segundos devuelve "min:seg",
+ * si son 3600 o más devuelve "hor:min:seg".
+ * @param {number} seg - Número de segundos
+ * @returns {string} Tiempo formateado
+ */
+function segATiempo(seg) {
+    if (seg < 3600) {
+        const min = Math.floor(seg / 60);
+        const s = seg % 60;
+        return `${min}:${s.toString().padStart(2, "0")}`;
+    }
+
+    const hor = Math.floor(seg / 3600);
+    const min = Math.floor((seg % 3600) / 60);
+    const s = seg % 60;
+    return `${hor}:${min.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
