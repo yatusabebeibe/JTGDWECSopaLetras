@@ -715,7 +715,7 @@ function terminar() {
 
         if (!input.value.trim()) {
             input.classList.add("error");
-            setTimeout(() => input.classList.remove("error"), 333);
+            setTimeout(() => input.classList.remove("error"), 400);
         } else {
             const nombre = input.value;
 
@@ -726,6 +726,7 @@ function terminar() {
             prompt.removeEventListener("submit", enviar);
             fondo.classList.remove("despuesAnimacion");
         }
+        input.value = "";
     }
 
     prompt.addEventListener("submit", enviar);
