@@ -44,6 +44,12 @@ var dimension = 0;
 /** @type Set<string> - lista con las palabras que vamos a usar para generar la sopa de letras */
 var listaPalabras = null;
 
+/** @type string - dificultad del juego actual */
+var dificultad = null;
+const FACIL = "facil";
+const MEDIO = "medio";
+const DIFICIL = "dificil";
+
 // # --- # Lintener Boton iniciar # --- #
 
 const btnEmpezar = document.getElementById('btnEmpezar');
@@ -102,6 +108,12 @@ window.ononline = () => {
 function empezar() {
     listaPalabras = new Set(palabras2);
 
+    dificultad = FACIL;
+
+    añadirPuntuacion("yokese", 29, 73, 4);
+    añadirPuntuacion("jesus", 73, 25, 5);
+    generarTablaPuntuaciones();
+
     dimension = calcularDimension(listaPalabras);
     let tablero = crearArrayTablero(dimension);
 
@@ -136,12 +148,6 @@ function empezar() {
     console.log(tablero);
     palabras();
 }
-
-// # --- # Tabla puntuacion # --- #
-
-añadirPuntuacion("yokese", 29, 73, 4);
-añadirPuntuacion("jesus", 73, 25, 5);
-generarTablaPuntuaciones();
 
 // # --- # FUNCIONES # --- #
 
@@ -535,30 +541,48 @@ function comprobarPalabraInvertida( palabra ) {
  * @returns {Array<{nombre: string, puntuacion: number}>} Array de objetos con nombre y puntuación.
  */
 function obtenerPuntuaciones() {
-    return JSON.parse(sessionStorage.getItem("puntuaciones")) || [];
+    return JSON.parse(sessionStorage.getItem("puntuaciones")) || {
+        facil: { primera: {}, segunda: {}, tercera: {} },
+        medio: { primera: {}, segunda: {}, tercera: {} },
+        dificil: { primera: {}, segunda: {}, tercera: {} }
+    };
 }
 
 /**
  * Añade una nueva puntuación si no existe o es mejor y mantiene el array ordenado de mayor a menor.
  * @param {string} nombre - Nombre del usuario.
  * @param {number} puntuacion - Puntuación obtenida por el jugador.
+ * @param {number} tiempo - Segundos que ha durado la partida.
+ * @param {number} nPalabras - Cuantas palabras se crearon.
  */
-function añadirPuntuacion(nombre, puntuacion, seg, nPal) {
+function añadirPuntuacion(nombre, puntuacion, tiempo, nPalabras) {
     let puntuaciones = obtenerPuntuaciones();
 
-    let usuario = puntuaciones.find(u => u.nombre === nombre);
+    let lista = [];
+    for (let clave of ["primera", "segunda", "tercera"]) {
+        if (puntuaciones[dificultad][clave].nombre) {
+            lista.push(puntuaciones[dificultad][clave]);
+        }
+    }
+
+    let usuario = lista.find(u => u.nombre === nombre);
 
     if (usuario) {
         if (puntuacion > usuario.puntuacion) {
             usuario.puntuacion = puntuacion;
-            usuario.seg = seg;
-            usuario.nPal = nPal;
+            usuario.tiempo = tiempo;
+            usuario.nPalabras = nPalabras;
         }
     } else {
-        puntuaciones.push({ nombre, puntuacion, seg, nPal });
+        lista.push({ nombre, puntuacion, tiempo, nPalabras });
     }
 
-    puntuaciones.sort((a, b) => b.puntuacion - a.puntuacion);
+    lista.sort((a, b) => b.puntuacion - a.puntuacion);
+    lista = lista.slice(0, 3);
+
+    puntuaciones[dificultad].primera = lista[0] || {};
+    puntuaciones[dificultad].segunda = lista[1] || {};
+    puntuaciones[dificultad].tercera = lista[2] || {};
 
     sessionStorage.setItem("puntuaciones", JSON.stringify(puntuaciones));
 }
@@ -570,12 +594,17 @@ function añadirPuntuacion(nombre, puntuacion, seg, nPal) {
 function generarTablaPuntuaciones() {
     let puntuaciones = obtenerPuntuaciones();
     let tbody = document.querySelector("#puntuaciones tbody");
-    console.log(tbody);
-
-
     tbody.innerHTML = "";
 
-    puntuaciones.forEach( (puntuacion, indice) => {
+    let posiciones = ["primera", "segunda", "tercera"];
+    let indice = 1;
+
+    for (let clave of posiciones) {
+        let puntuacion = puntuaciones[dificultad][clave];
+
+        // si la posición está vacía, saltar
+        if (!puntuacion.nombre) continue;
+
         let fila = document.createElement("tr");
 
         let celdaN = document.createElement("td");
@@ -584,7 +613,7 @@ function generarTablaPuntuaciones() {
         let celdaSeg = document.createElement("td");
         let celdanPal = document.createElement("td");
 
-        celdaN.textContent = indice + 1;
+        celdaN.textContent = indice;
         fila.appendChild(celdaN);
 
         celdaNom.textContent = puntuacion.nombre;
@@ -593,14 +622,16 @@ function generarTablaPuntuaciones() {
         celdaPun.textContent = puntuacion.puntuacion;
         fila.appendChild(celdaPun);
 
-        celdaSeg.textContent = segATiempo(puntuacion.seg);
+        celdaSeg.textContent = segATiempo(puntuacion.tiempo);
         fila.appendChild(celdaSeg);
 
-        celdanPal.textContent = puntuacion.nPal;
+        celdanPal.textContent = puntuacion.nPalabras;
         fila.appendChild(celdanPal);
 
         tbody.appendChild(fila);
-    });
+
+        indice++;
+    }
 }
 
 /**
@@ -764,6 +795,8 @@ function limpiarTablero() {
     btnEmpezar.style.display = '';
     btnEmpezar.classList.remove('fade-out');
     btnEmpezar.classList.add('fade-in');
+
+    dificultad = null;
 }
 
 /**
