@@ -104,12 +104,13 @@ header,footer {
     position: relative;
     color: white;
     text-align: center;
-    padding: 5px;
+    padding: 5px 0;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 5px;
     overflow: hidden;
+    align-content: center;
 }
 
 #seleccionado {
@@ -135,6 +136,7 @@ header,footer {
 
 /* Cuando tenga contenido */
 #checkInternet:not(:empty) {
+    display: block;
     padding: 5px 0;
     opacity: 1;
     transform: translateY(0);
