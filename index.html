@@ -4,23 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sopa de letras</title>
-    <script src="./webroot/js/main.js" defer></script>
+    <script type="module" src="./webroot/js/main.js" defer></script>
+    <script type="module" src="./webroot/js/funcionesInterfaz.js" defer></script>
     <link rel="stylesheet" href="./webroot/css/styles.css">
-    <script>
-        document.addEventListener("DOMContentLoaded",() =>{
-            let textoHora = document.getElementById("hora");
-            textoHora.innerHTML = obtenerHoraActual();
-            setInterval(() => {
-                textoHora.innerHTML = obtenerHoraActual();
-            }, 1000);
-        })
-    </script>
-    <script>
-        setInterval(() => {
-            if (!aTerminado)
-            document.getElementById("temporizador").innerHTML = segATiempo(temporizador());
-        }, 333);
-    </script>
 </head>
 <body>
     <header>
