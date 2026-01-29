@@ -4,7 +4,7 @@ import * as config from './config.js';
 import { añadirPuntuacion, generarTablaPuntuaciones, calcularPuntuacion } from './puntuaciones.js';
 // añadirmos las funciones de tablero.js que utilizaremos aqui
 import { rellenarEspaciosTablero, pintarTableroLinstener, limpiarTablero, calcularDimension, crearArrayTablero, comprobarPosicionValida } from './tablero.js';
-import { escribirPalabra, calcularPosicionAleatoria, calcularDireccionAleatoria, palabras } from './palabrasTablero.js';
+import { escribirPalabra, calcularPosicionAleatoria, calcularDireccionAleatoria, palabras, obtenerPalabrasApi } from './palabrasTablero.js';
 
 import { temporizador } from './tiempo.js';
 
@@ -90,10 +90,21 @@ window.ononline = () => {
 
 // # --- # Crear tablero # --- #
 
-export function empezar() {
-    config.setListaPalabras(new Set(palabras2));
-
+export async function empezar() {
     config.setDificultad(config.FACIL);
+
+    const mapDificultad = {
+        [config.FACIL]: 4,
+        [config.MEDIO]: 8,
+        [config.DIFICIL]: 12
+    };
+
+    const nPalabras = mapDificultad[config.dificultad] || 4; // fallback por si acaso
+    console.log(nPalabras+" fsdfs");
+    console.log(config.dificultad);
+
+    const aPalabras = await obtenerPalabrasApi(nPalabras);
+    config.setListaPalabras(new Set(aPalabras));
 
     añadirPuntuacion("yokese", 29, 73, 4);
     añadirPuntuacion("jesus", 73, 25, 5);

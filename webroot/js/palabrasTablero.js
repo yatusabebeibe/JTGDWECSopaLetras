@@ -197,3 +197,21 @@ export function palabras() {
     }
     elementoListaPalabras.appendChild(gridPalabras);
 }
+
+export async function obtenerPalabrasApi(nPalabras) {
+    const aPalabras = [];
+
+    while (aPalabras.length < nPalabras) {
+        // Longitud aleatoria entre 5 y 9
+        const length = Math.floor(Math.random() * 5) + 5;
+        const respuesta = await fetch(`https://random-word-api.herokuapp.com/word?lang=es&number=1&length=${length}`);
+        const [palabra] = await respuesta.json();
+        // Comprobamos que solo tenga letras (sin espacios ni símbolos)
+        if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/.test(palabra)) {
+            aPalabras.push(palabra.toLowerCase());
+        }
+        // Si no es válida, simplemente seguimos al siguiente fetch
+    }
+
+    return aPalabras;
+}
